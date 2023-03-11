@@ -82,6 +82,7 @@ tablename = st.text_input("Enter Table Name to create")
 if st.button('Create Table'):
 	st.write('Table Created Successfully')
 	testDF = """CREATE TABLE IF NOT EXISTS {} (    name VARCHAR(255),	email VARCHAR(255),	address VARCHAR(255),	phone_number VARCHAR(16),	city VARCHAR(255),	state VARCHAR(255),	zip_code VARCHAR(16),	job VARCHAR(255),	card_number VARCHAR(64),	card_ssn VARCHAR(32),	score SMALLINT,	transaction_date DATETIME,	bank_name VARCHAR(64))""".format(tablename)
+	connection = mysql.connector.connect(host=host, database=database, user=user, password=password, connection_timeout=180)
 	cursor=connection.cursor()
 	cursor.execute(testDF)
 	connection.commit()
