@@ -7,9 +7,10 @@ import mysql.connector
 from mysql.connector import Error
 import streamlit as st
 
-
+#PAGE CONFIG PARAMETERS
 st.set_page_config(layout="centered")
 
+#EASY LOGO AND TITLE
 col1, col2, col3 = st.columns(3)
 with col1:
     st.write(' ')
@@ -20,7 +21,7 @@ with col3:
 st.title('Creating Fake People APP')
 
 
-# INSTANCE AND LIST CREATION
+#FAKE ID'S CREATION
 fake = Faker()
 data = []
 numbers= st.number_input("Number of users needed? Press enter to apply",min_value=0, max_value=10000000,step=1)
@@ -42,7 +43,8 @@ for i in range(0, numbers):
         'bank' : fake.credit_card_provider(card_type=None)      
         }) 
     
-#FAKE CREATION
+    
+#FAKE DF CREATION
 count = numbers
 st.dataframe(data[:count])
 df = pd.DataFrame(data[:count])
@@ -66,7 +68,7 @@ database = st.text_input("Database: ")
 user = st.text_input("User: ")
 password = st.text_input("Password: ")
 
-#BUTTON 
+#BUTTON CHECKER 
 if st.button("Connect"):
     try:
         connection = mysql.connector.connect(host=host, database=database, user=user, password=password, connection_timeout=180)
@@ -81,7 +83,7 @@ if st.button('Create Table'):
 	st.write('Table Created Successfully')
 	testDF = """CREATE TABLE IF NOT EXISTS {} (    name VARCHAR(255),	email VARCHAR(255),	address VARCHAR(255),	phone_number VARCHAR(16),	city VARCHAR(255),	state VARCHAR(255),	zip_code VARCHAR(16),	job VARCHAR(255),	card_number VARCHAR(64),	card_ssn VARCHAR(32),	score SMALLINT,	transaction_date DATETIME,	bank_name VARCHAR(64))""".format(tablename)
 	cursor=connection.cursor()
-	cursor.execute(testDF)
+    cursor.execute(testDF)
 	connection.commit()
 
 #DF TO SQL
@@ -89,7 +91,7 @@ def sql_df_upload(df):
     connection = mysql.connector.connect(host=host, database=database, user=user, password=password, connection_timeout=180)
     cursor=connection.cursor()     
     for index, row in df.iterrows():
-        sql = "INSERT INTO test_tbl (name, email, address, phone_number, city, state, zip_code, job, card_number, card_ssn, score, transaction_date, bank_name ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        sql = "INSERT INTO {} (name, email, address, phone_number, city, state, zip_code, job, card_number, card_ssn, score, transaction_date, bank_name ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" .format(tablename)
         cursor.execute(sql, tuple(row))
         connection.commit()
     connection.close()
