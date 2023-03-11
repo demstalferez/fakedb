@@ -1,5 +1,5 @@
 streamlit
-faker=
-pandas=
+faker
+pandas
 sqlalchemy
 mysql-connector-python
