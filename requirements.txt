@@ -3,3 +3,5 @@ faker
 pandas
 sqlalchemy
 mysql-connector-python
+random
+pandas
