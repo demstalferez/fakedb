@@ -8,7 +8,6 @@ from mysql.connector import Error
 import streamlit as st
 
 
-st.set_option('deprecation.showfileUploaderEncoding', False)
 st.set_page_config(layout="centered")
 
 col1, col2, col3 = st.columns(3)
