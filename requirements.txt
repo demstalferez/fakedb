@@ -3,4 +3,4 @@ faker
 pandas
 sqlalchemy
 mysql-connector-python
-pandas
+
